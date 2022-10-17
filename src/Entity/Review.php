@@ -23,21 +23,21 @@ class Review
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:collection'])]
-    private ?string $FullName = null;
+    private ?string $fullName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:collection'])]
-    private ?string $Email = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:collection'])]
-    private ?string $Comment = null;
+    private ?string $comment = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $CreationDate = null;
+    private ?\DateTimeInterface $creationDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
-    private ?Book $Book = null;
+    private ?Book $book = null;
 
     public function getId(): ?int
     {
