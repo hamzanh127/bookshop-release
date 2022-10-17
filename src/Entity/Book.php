@@ -16,7 +16,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
     itemOperations : ['get'=>[
         'normalization_context' => ['groups' => ['read:collection','read:item','read:Book']]
     ],
-    'put','delete']
+    'put'=>[
+        'normalization_context' => ['groups' => ['read:Book']]
+    ],
+    'delete']
 )]
 class Book
 {
@@ -30,24 +33,24 @@ class Book
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:collection'])]
 
-    private ?string $Title = null;
+    private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:collection'])]
 
-    private ?string $Description = null;
+    private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     #[Groups(['read:collection'])]
 
-    private ?\DateTimeInterface $PublicationDate = null;
+    private ?\DateTimeInterface $publicationDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:collection'])]
 
-    private ?string $Genre = null;
+    private ?string $genre = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Books')]
+    #[ORM\ManyToOne(inversedBy: 'books')]
     #[Groups(['read:item'])]
     private ?Author $author = null;
 
@@ -66,48 +69,48 @@ class Book
 
     public function getTitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
     public function setTitle(?string $Title): self
     {
-        $this->Title = $Title;
+        $this->title = $Title;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
     public function setDescription(?string $Description): self
     {
-        $this->Description = $Description;
+        $this->description = $Description;
 
         return $this;
     }
 
     public function getPublicationDate(): ?\DateTimeInterface
     {
-        return $this->PublicationDate;
+        return $this->publicationDate;
     }
 
     public function setPublicationDate(?\DateTimeInterface $PublicationDate): self
     {
-        $this->PublicationDate = $PublicationDate;
+        $this->publicationDate = $PublicationDate;
 
         return $this;
     }
 
     public function getGenre(): ?string
     {
-        return $this->Genre;
+        return $this->genre;
     }
 
     public function setGenre(?string $Genre): self
     {
-        $this->Genre = $Genre;
+        $this->genre = $Genre;
 
         return $this;
     }

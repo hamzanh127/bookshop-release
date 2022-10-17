@@ -23,17 +23,17 @@ class Author
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:Book'])]
-    private ?string $FirstName = null;
+    private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:Book'])]
-    private ?string $LastName = null;
+    private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Bibliography = null;
+    private ?string $bibliography = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]
-    private Collection $Books;
+    private Collection $books;
 
     public function __construct()
     {
@@ -47,7 +47,7 @@ class Author
 
     public function getFirstName(): ?string
     {
-        return $this->FirstName;
+        return $this->firstName;
     }
 
     public function setFirstName(?string $FirstName): self
@@ -59,7 +59,7 @@ class Author
 
     public function getLastName(): ?string
     {
-        return $this->LastName;
+        return $this->lastName;
     }
 
     public function setLastName(?string $LastName): self
@@ -71,7 +71,7 @@ class Author
 
     public function getBibliography(): ?string
     {
-        return $this->Bibliography;
+        return $this->bibliography;
     }
 
     public function setBibliography(?string $Bibliography): self
