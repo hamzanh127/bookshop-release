@@ -94,12 +94,12 @@ class Review
 
     public function getBook(): ?Book
     {
-        return $this->Book;
+        return $this->book;
     }
 
-    public function setBook(?Book $Book): self
+    public function setBook(?Book $book): self
     {
-        $this->Book = $Book;
+        $this->book = $book;
 
         return $this;
     }
