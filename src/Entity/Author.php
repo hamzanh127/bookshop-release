@@ -6,13 +6,18 @@ use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+
+
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 #[ApiResource(
     itemOperations : ['get','put','delete']
 )]
+#[ApiFilter(SearchFilter::class, properties: ['firstName' => 'exact'])]
 class Author
 {
     #[ORM\Id]
@@ -86,7 +91,7 @@ class Author
      */
     public function getBooks(): Collection
     {
-        return $this->Books;
+        return $this->books;
     }
 
     public function addBook(Book $book): self
