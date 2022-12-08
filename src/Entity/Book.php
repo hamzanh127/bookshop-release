@@ -17,6 +17,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ApiResource(
     normalizationContext : ['groups' => ['read:collection']],
+    denormalizationContext: ['groups' => ['read:item']],
     itemOperations : ['get'=>[
         'normalization_context' => ['groups' => ['read:collection','read:item','read:Book']]
     ],
@@ -26,8 +27,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
         'normalization_context' => ['groups' => ['read:Book']]
     ],
     'delete'],
-    attributes: ["security" => "is_granted('ROLE_USER')"],
+    // attributes: ["security" => "is_granted('ROLE_USER')"],
     collectionOperations: [
+        "get",
         "post" => [
             "security" => "is_granted('ROLE_ADMIN')",
             "security_message" => "Only admins can add books.",
@@ -36,19 +38,19 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     ],
 )]
 
-#[ApiFilter(SearchFilter::class, properties: ['author' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['author' => 'exact','title'=>'partial','user.username'=>'exact'])]
 
 class Book
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:collection'])]
+    #[Groups(['read:collection','read:Book'])]
 
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:collection'])]
+    #[Groups(['read:collection','read:Book'])]
 
     private ?string $title = null;
 
@@ -68,7 +70,7 @@ class Book
     private ?string $genre = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
-    #[Groups(['read:item'])]
+    #[Groups(['read:collection'])]
     private ?Author $author = null;
 
     #[ORM\OneToMany(mappedBy: 'Book', targetEntity: Review::class)]
