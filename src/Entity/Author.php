@@ -15,7 +15,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 #[ApiResource(
-    itemOperations : ['get','put','delete']
+    normalizationContext : ['groups' => ['read:Book']],
+    denormalizationContext: ['groups' => ['read:item']],
+    itemOperations : ['get'=>[
+        'normalization_context' => ['groups' => ['read:item','read:Book']]
+    ],
+    'put',
+    'delete']
 )]
 #[ApiFilter(SearchFilter::class, properties: ['firstName' => 'exact'])]
 class Author
@@ -27,7 +33,7 @@ class Author
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['read:Book'])]
+    #[Groups(['read:Book','read:collection'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -38,6 +44,7 @@ class Author
     private ?string $bibliography = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]
+    #[Groups(['read:Book'])]
     private Collection $books;
 
     public function __construct()

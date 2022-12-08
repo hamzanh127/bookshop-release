@@ -35,7 +35,7 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
         user:
             pattern:   ^/api/users
-            methods: [GET,PUT,DELETE]
+            methods: [PUT,DELETE]
             stateless: true
             guard:
                 authenticators:
@@ -67,8 +67,8 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/reviews, roles: IS_AUTHENTiCATED_FULLY,methods: [GET,POST,PUT,DELETE] } # Allows accessing API documentations and Swagger UI
-        # - { path: ^/api/books, roles: ROLE_ADMIN,methods: [POST,PUT,DELETE] }
-        - { path: ^/api/users, roles: ROLE_USER,methods: [GET,PUT,DELETE] }
+        - { path: ^/api/books, roles: ROLE_ADMIN,methods: [POST,PUT,DELETE] }
+        - { path: ^/api/users, roles: ROLE_USER,methods: [PUT,DELETE] }
 
         # - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
         # - { path: ^/api/login, roles: PUBLIC_ACCESS }
